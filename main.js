@@ -22,8 +22,8 @@ function createWindow() {
 }
 
 app.whenReady().then(() => {
-  setupScreenSharingMain(mainWindow, 'Jitsi Meet Simple', app.getName());
   createWindow();
+  setupScreenSharingMain(mainWindow, 'Jitsi Meet Simple', app.getName());
 
   app.on('activate', function () {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
