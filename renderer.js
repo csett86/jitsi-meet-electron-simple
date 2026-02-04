@@ -20,9 +20,10 @@ function loadJitsiMeet() {
         return;
     }
     
-    // Validate URL format
+    // Validate URL format and extract domain and room
+    let parsedUrl;
     try {
-        const parsedUrl = new URL(url);
+        parsedUrl = new URL(url);
         if (!parsedUrl.protocol.startsWith('http')) {
             alert('URL must start with http:// or https://');
             return;
@@ -32,8 +33,6 @@ function loadJitsiMeet() {
         return;
     }
     
-    // Extract domain and room from URL
-    const parsedUrl = new URL(url);
     const domain = parsedUrl.hostname;
     const roomName = parsedUrl.pathname.substring(1); // Remove leading slash
     
