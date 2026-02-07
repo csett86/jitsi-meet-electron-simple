@@ -40,9 +40,10 @@ function loadJitsiMeet() {
         return;
     }
     
-    // Hide welcome message and show container
+    // Hide welcome message and URL bar, show container in fullscreen
     document.getElementById('welcome-message').style.display = 'none';
-    document.getElementById('jitsi-container').style.display = 'block';
+    document.getElementById('url-bar').classList.add('hidden');
+    document.getElementById('jitsi-container').classList.add('fullscreen');
     
     // Clear existing conference if any
     if (api) {

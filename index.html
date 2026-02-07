@@ -20,6 +20,10 @@
             border-bottom: 1px solid #ccc;
         }
         
+        #url-bar.hidden {
+            display: none;
+        }
+        
         #jitsi-url {
             flex: 1;
             padding: 8px;
@@ -46,6 +50,15 @@
         #jitsi-container {
             flex: 1;
             display: none;
+        }
+        
+        #jitsi-container.fullscreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
         }
         
         #welcome-message {
