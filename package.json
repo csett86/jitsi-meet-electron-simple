@@ -10,11 +10,11 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "electron": "^28.0.0",
-    "electron-builder": "^24.9.1"
+    "electron": "^40.1.0",
+    "electron-builder": "^26.7.0"
   },
   "dependencies": {
-    "@jitsi/electron-sdk": "^3.0.0"
+    "@jitsi/electron-sdk": "^9.0.0"
   },
   "build": {
     "appId": "com.jitsi.meet.electron.simple",

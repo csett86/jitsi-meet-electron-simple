@@ -1,9 +1,8 @@
 const { setupScreenSharingRender } = require('@jitsi/electron-sdk');
 
-let api = null;
+const JitsiMeetExternalAPI  = require('./external_api');
 
-// Setup screen sharing for renderer process
-setupScreenSharingRender();
+let api = null;
 
 document.getElementById('go-button').addEventListener('click', loadJitsiMeet);
 document.getElementById('jitsi-url').addEventListener('keypress', function(event) {
@@ -50,26 +49,14 @@ function loadJitsiMeet() {
         api.dispose();
     }
     
-    // Initialize Jitsi Meet API
-    const JitsiMeetExternalAPI = window.JitsiMeetExternalAPI || require('@jitsi/electron-sdk').JitsiMeetExternalAPI;
-    
+    // Initialize Jitsi Meet API    
     api = new JitsiMeetExternalAPI(domain, {
         roomName: roomName,
         width: '100%',
         height: '100%',
-        parentNode: document.querySelector('#jitsi-container'),
-        configOverwrite: {
-            startWithAudioMuted: true,
-            startWithVideoMuted: true
-        },
-        interfaceConfigOverwrite: {
-            TOOLBAR_BUTTONS: [
-                'microphone', 'camera', 'closedcaptions', 'desktop', 'fullscreen',
-                'fodeviceselection', 'hangup', 'profile', 'chat', 'recording',
-                'livestreaming', 'etherpad', 'sharedvideo', 'settings', 'raisehand',
-                'videoquality', 'filmstrip', 'feedback', 'stats', 'shortcuts',
-                'tileview', 'videobackgroundblur', 'download', 'help', 'mute-everyone'
-            ]
-        }
+        parentNode: document.querySelector('#jitsi-container')
     });
+
+    // Setup screen sharing for renderer process
+    setupScreenSharingRender(api);
 }

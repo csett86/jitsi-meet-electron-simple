@@ -1,5 +1,4 @@
 const { app, BrowserWindow } = require('electron');
-const path = require('path');
 const { setupScreenSharingMain } = require('@jitsi/electron-sdk');
 
 let mainWindow;
