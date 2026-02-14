@@ -35,7 +35,7 @@ test.describe('Jitsi Meet Conference Loading', () => {
     const urlInput = await window.locator('#jitsi-url');
     await expect(urlInput).toBeVisible();
 
-    // Enter the conference URL
+    // Enter the conference URL (as specified in requirements)
     const conferenceUrl = 'https://alpha.jitsi.net/ztexfftt644';
     await urlInput.fill(conferenceUrl);
 
