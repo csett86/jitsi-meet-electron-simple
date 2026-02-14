@@ -1,6 +1,41 @@
 const { setupScreenSharingRender } = require('@jitsi/electron-sdk');
 const JitsiMeetExternalAPI  = require('./external_api');
 
+const HISTORY_KEY = 'jitsi-room-history';
+const MAX_HISTORY = 5;
+
+function getHistory() {
+    try {
+        return JSON.parse(localStorage.getItem(HISTORY_KEY)) || [];
+    } catch (e) {
+        return [];
+    }
+}
+
+function saveToHistory(url) {
+    let history = getHistory().filter(item => item !== url);
+    history.unshift(url);
+    if (history.length > MAX_HISTORY) {
+        history = history.slice(0, MAX_HISTORY);
+    }
+    localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+    populateHistory();
+}
+
+function populateHistory() {
+    const datalist = document.getElementById('room-history');
+    if (!datalist) return;
+    datalist.innerHTML = '';
+    getHistory().forEach(url => {
+        const option = document.createElement('option');
+        option.value = url;
+        datalist.appendChild(option);
+    });
+}
+
+// Populate history on load
+populateHistory();
+
 document.getElementById('go-button').addEventListener('click', loadJitsiMeet);
 document.getElementById('jitsi-url').addEventListener('keypress', function(event) {
     if (event.key === 'Enter') {
@@ -36,6 +71,9 @@ function loadJitsiMeet() {
         alert('URL must include a room name');
         return;
     }
+
+    // Save URL to history
+    saveToHistory(url);
     
     const api = new JitsiMeetExternalAPI(domain, {
         roomName: roomName,
