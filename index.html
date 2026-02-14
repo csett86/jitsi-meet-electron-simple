@@ -73,7 +73,8 @@
 </head>
 <body>
     <div id="url-bar">
-        <input type="text" id="jitsi-url" placeholder="Enter Jitsi Meet URL (e.g., https://meet.jit.si/yourroom)" autofocus/>
+        <input type="text" id="jitsi-url" list="room-history" placeholder="Enter Jitsi Meet URL (e.g., https://meet.jit.si/yourroom)" autofocus/>
+        <datalist id="room-history"></datalist>
         <button id="go-button">Go</button>
     </div>
     <div id="welcome-message">Enter a Jitsi Meet URL above to start a conference</div>
