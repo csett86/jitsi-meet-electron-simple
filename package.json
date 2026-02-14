@@ -5,13 +5,17 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "build": "electron-builder"
+    "build": "electron-builder",
+    "test": "xvfb-run -a npm run test:playwright",
+    "test:playwright": "playwright test"
   },
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@playwright/test": "^1.58.2",
     "electron": "^40.1.0",
-    "electron-builder": "^26.7.0"
+    "electron-builder": "^26.7.0",
+    "playwright": "^1.58.2"
   },
   "dependencies": {
     "@jitsi/electron-sdk": "^9.0.0"
