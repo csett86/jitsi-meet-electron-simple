@@ -1,8 +1,5 @@
 const { setupScreenSharingRender } = require('@jitsi/electron-sdk');
-
 const JitsiMeetExternalAPI  = require('./external_api');
-
-let api = null;
 
 document.getElementById('go-button').addEventListener('click', loadJitsiMeet);
 document.getElementById('jitsi-url').addEventListener('keypress', function(event) {
@@ -40,18 +37,7 @@ function loadJitsiMeet() {
         return;
     }
     
-    // Hide welcome message and URL bar, show container in fullscreen
-    document.getElementById('welcome-message').style.display = 'none';
-    document.getElementById('url-bar').classList.add('hidden');
-    document.getElementById('jitsi-container').classList.add('fullscreen');
-    
-    // Clear existing conference if any
-    if (api) {
-        api.dispose();
-    }
-    
-    // Initialize Jitsi Meet API    
-    api = new JitsiMeetExternalAPI(domain, {
+    const api = new JitsiMeetExternalAPI(domain, {
         roomName: roomName,
         width: '100%',
         height: '100%',
@@ -61,14 +47,19 @@ function loadJitsiMeet() {
     // Setup screen sharing for renderer process
     setupScreenSharingRender(api);
 
+    // Hide welcome message and URL bar, show container in fullscreen
+    const urlBar = document.getElementById('url-bar');
+    const jitsiContainer = document.getElementById('jitsi-container');
+
+    urlBar.classList.add('hidden');
+    jitsiContainer.classList.add('fullscreen');
+
     // Handle conference close
     api.addListener('readyToClose', () => {
+        urlBar.classList.remove('hidden');
+        jitsiContainer.classList.remove('fullscreen');
+
         api.dispose();
-        api = null;
-        const location = document.getElementById('jitsi-container');
-        location.innerHTML = '';
-        location.classList.remove('fullscreen');
-        document.getElementById('url-bar').classList.remove('hidden');
-        document.getElementById('welcome-message').style.display = '';
+        jitsiContainer.innerHTML = '';
     });
 }
