@@ -60,6 +60,5 @@ function loadJitsiMeet() {
         jitsiContainer.classList.remove('fullscreen');
 
         api.dispose();
-        jitsiContainer.innerHTML = '';
     });
 }
