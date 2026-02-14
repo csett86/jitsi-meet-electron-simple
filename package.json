@@ -25,6 +25,7 @@
     "files": [
       "main.js",
       "index.html",
+      "external_api.js",
       "renderer.js",
       "node_modules/**/*"
     ],

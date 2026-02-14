@@ -1,5 +1,4 @@
 const { setupScreenSharingRender } = require('@jitsi/electron-sdk');
-const JitsiMeetExternalAPI  = require('./external_api');
 
 const HISTORY_KEY = 'jitsi-room-history';
 const MAX_HISTORY = 5;
