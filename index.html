@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Jitsi Meet Simple</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        
+        #url-bar {
+            display: flex;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-bottom: 1px solid #ccc;
+        }
+        
+        #url-bar.hidden {
+            display: none;
+        }
+        
+        #jitsi-url {
+            flex: 1;
+            padding: 8px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+        
+        #go-button {
+            padding: 8px 20px;
+            font-size: 14px;
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        #go-button:hover {
+            background-color: #004099;
+        }
+        
+        #jitsi-container {
+            flex: 1;
+            display: none;
+        }
+        
+        #jitsi-container.fullscreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        
+        #welcome-message {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div id="url-bar">
+        <input type="text" id="jitsi-url" placeholder="Enter Jitsi Meet URL (e.g., https://meet.jit.si/yourroom)" />
+        <button id="go-button">Go</button>
+    </div>
+    <div id="welcome-message">Enter a Jitsi Meet URL above to start a conference</div>
+    <div id="jitsi-container"></div>
+    
+    <script src="renderer.js"></script>
+</body>
+</html>
