@@ -24,7 +24,9 @@
     },
     "files": [
       "main.js",
+      "preload.js",
       "index.html",
+      "external_api.js",
       "renderer.js",
       "node_modules/**/*"
     ],
