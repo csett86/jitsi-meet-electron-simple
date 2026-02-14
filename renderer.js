@@ -60,4 +60,15 @@ function loadJitsiMeet() {
 
     // Setup screen sharing for renderer process
     setupScreenSharingRender(api);
+
+    // Handle conference close
+    api.addListener('readyToClose', () => {
+        api.dispose();
+        api = null;
+        const location = document.getElementById('jitsi-container');
+        location.innerHTML = '';
+        location.classList.remove('fullscreen');
+        document.getElementById('url-bar').classList.remove('hidden');
+        document.getElementById('welcome-message').style.display = '';
+    });
 }
