@@ -39,8 +39,6 @@ function loadJitsiMeet() {
     
     const api = new JitsiMeetExternalAPI(domain, {
         roomName: roomName,
-        width: '100%',
-        height: '100%',
         parentNode: document.querySelector('#jitsi-container')
     });
 
