@@ -1,3 +1,5 @@
+const { setupScreenSharingRender } = require('@jitsi/electron-sdk');
+
 const HISTORY_KEY = 'jitsi-room-history';
 const MAX_HISTORY = 5;
 
@@ -72,13 +74,13 @@ function loadJitsiMeet() {
     // Save URL to history
     saveToHistory(url);
     
-    const api = new JitsiMeetExternalAPI(domain, {
+    const api = new window.JitsiMeetExternalAPI(domain, {
         roomName: roomName,
         parentNode: document.querySelector('#jitsi-container')
     });
 
     // Setup screen sharing for renderer process
-    window.electronAPI.setupScreenSharing(api);
+    setupScreenSharingRender(api);
 
     // Hide welcome message and URL bar, show container in fullscreen
     const urlBar = document.getElementById('url-bar');
