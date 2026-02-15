@@ -1,4 +1,5 @@
 const { app, BrowserWindow, desktopCapturer, session } = require('electron');
+const { autoUpdater } = require("electron-updater");
 
 let mainWindow;
 
@@ -31,6 +32,8 @@ app.whenReady().then(() => {
       callback({});
     });
   }, { useSystemPicker: true });
+
+  autoUpdater.checkForUpdatesAndNotify();
 
   createWindow();
 
