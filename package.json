@@ -16,7 +16,6 @@
     "electron": "^40.1.0",
     "electron-builder": "^26.7.0"
   },
-  "dependencies": {},
   "build": {
     "appId": "com.jitsi.meet.electron.simple",
     "productName": "Jitsi Meet Simple",
