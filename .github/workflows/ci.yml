@@ -52,9 +52,11 @@ jobs:
         echo "CSC_LINK=${{ secrets.mac_cert }}" >> $GITHUB_ENV
         echo "CSC_KEY_PASSWORD=${{ secrets.mac_cert_password }}" >> $GITHUB_ENV
         echo "CSC_FOR_PULL_REQUEST=true" >> $GITHUB_ENV
-        echo "APPLE_ID=${{ secrets.apple_id }}" >> $GITHUB_ENV
-        echo "APPLE_APP_SPECIFIC_PASSWORD=${{ secrets.apple_id_password }}" >> $GITHUB_ENV
-        echo "APPLE_TEAM_ID=${{ secrets.team_id }}" >> $GITHUB_ENV
+        echo "APPLE_API_KEY=~/private_keys/AuthKey_${{ secrets.api_key_id }}.p8" >> $GITHUB_ENV
+        echo "APPLE_API_KEY_ID=${{ secrets.api_key_id }}" >> $GITHUB_ENV
+        echo "APPLE_API_ISSUER=${{ secrets.api_key_issuer_id }}" >> $GITHUB_ENV
+        mkdir -p ~/private_keys/
+        echo '${{ secrets.api_key }}' > ~/private_keys/AuthKey_${{ secrets.api_key_id }}.p8
     - run: npm ci
     - run: npm run dist
     - uses: actions/upload-artifact@v6
