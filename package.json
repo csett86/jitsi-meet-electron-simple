@@ -50,7 +50,15 @@
     },
     "win": {
       "artifactName": "jitsi-meet-simple.${ext}",
-      "target": "nsis"
+      "target": [
+        {
+          "arch": [
+            "x64",
+            "arm64"
+          ],
+          "target": "nsis"
+        }
+      ]
     },
     "linux": {
       "artifactName": "jitsi-meet-simple-${arch}.${ext}",
