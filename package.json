@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "dist": "electron-builder --publish onTagOrDraft",
+    "dist": "electron-builder",
     "test:ci": "xvfb-run -a npm test",
     "test": "playwright test"
   },
