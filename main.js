@@ -1,5 +1,4 @@
-const { app, BrowserWindow } = require('electron');
-const { setupScreenSharingMain } = require('@jitsi/electron-sdk');
+const { app, BrowserWindow, desktopCapturer, session } = require('electron');
 
 let mainWindow;
 
@@ -8,8 +7,8 @@ function createWindow() {
     width: 1200,
     height: 800,
     webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false
+      nodeIntegration: false,
+      contextIsolation: true
     }
   });
 
@@ -21,8 +20,19 @@ function createWindow() {
 }
 
 app.whenReady().then(() => {
+  session.defaultSession.setDisplayMediaRequestHandler((request, callback) => {
+    desktopCapturer.getSources({ types: ['screen', 'window'] }).then((sources) => {
+      if (sources.length === 0) {
+        callback({});
+        return;
+      }
+      callback({ video: sources[0] });
+    }).catch(() => {
+      callback({});
+    });
+  }, { useSystemPicker: true });
+
   createWindow();
-  setupScreenSharingMain(mainWindow, 'Jitsi Meet Simple', app.getName());
 
   app.on('activate', function () {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
