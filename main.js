@@ -24,7 +24,13 @@ app.whenReady().then(() => {
 
   session.defaultSession.setDisplayMediaRequestHandler((request, callback) => {
     desktopCapturer.getSources({ types: ['screen'] }).then((sources) => {
+      if (sources.length === 0) {
+        callback({});
+        return;
+      }
       callback({ video: sources[0], audio: 'loopback' });
+    }).catch(() => {
+      callback({});
     });
   }, { useSystemPicker: true });
 
