@@ -85,14 +85,18 @@ function loadJitsiMeet() {
     // Hide welcome message and URL bar, show container in fullscreen
     const urlBar = document.getElementById('url-bar');
     const jitsiContainer = document.getElementById('jitsi-container');
+    const welcomeMessage = document.getElementById('welcome-message');
 
     urlBar.classList.add('hidden');
     jitsiContainer.classList.add('fullscreen');
+    const originalMessage = welcomeMessage.innerText;
+    welcomeMessage.innerText = 'Loading...';
 
     // Handle conference close
     api.addListener('readyToClose', () => {
         urlBar.classList.remove('hidden');
         jitsiContainer.classList.remove('fullscreen');
+        welcomeMessage.innerText = originalMessage;
 
         api.dispose();
     });
