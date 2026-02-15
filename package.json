@@ -26,8 +26,7 @@
       "main.js",
       "index.html",
       "external_api.js",
-      "renderer.js",
-      "node_modules/**/*"
+      "renderer.js"
     ],
     "mac": {
       "category": "public.app-category.video"
