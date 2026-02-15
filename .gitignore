@@ -141,3 +141,5 @@ vite.config.ts.timestamp-*
 # Playwright test results
 test-results/
 playwright-report/
+
+.DS_Store
