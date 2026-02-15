@@ -37,10 +37,5 @@ The built application will be available in the `dist` folder.
 npm test
 ```
 
-The test suite includes an automated end-to-end test that:
-1. Launches the Electron app
-2. Enters a conference URL
-3. Clicks the "Go" button
-4. Verifies that the conference loads successfully via the JitsiMeetExternalAPI
-
-The tests use Playwright for Electron to automate the application testing. On Linux systems without a display server, the tests automatically run with xvfb (X virtual framebuffer).
+The tests use Playwright for Electron to automate the application testing.
+In CI / headless systems, use ```npm run test:ci``` to run the tests inside xvfb.
