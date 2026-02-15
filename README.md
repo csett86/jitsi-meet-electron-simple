@@ -31,3 +31,11 @@ The built application will be available in the `dist` folder.
 - electron: For the desktop application framework
 - @jitsi/electron-sdk: For Jitsi Meet integration and screen sharing
 - electron-builder: For building distributable packages
+
+## Testing
+```bash
+npm test
+```
+
+The tests use Playwright for Electron to automate the application testing.
+In CI / headless systems, use ```npm run test:ci``` to run the tests inside xvfb.
