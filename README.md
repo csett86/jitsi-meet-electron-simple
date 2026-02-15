@@ -27,9 +27,13 @@ The built application will be available in the `dist` folder.
 3. Click the "Go" button or press Enter
 4. The Jitsi conference will load in the window
 
+## Features
+- Join Jitsi Meet
+- Support screen sharing, if possible with native screensharing pickers (macOS 15+, Linux Wayland)
+- otherwise only the first screen is shared full-screen
+
 ## Dependencies
 - electron: For the desktop application framework
-- @jitsi/electron-sdk: For Jitsi Meet integration and screen sharing
 - electron-builder: For building distributable packages
 
 ## Testing
