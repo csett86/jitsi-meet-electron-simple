@@ -20,8 +20,6 @@ function createWindow() {
 }
 
 app.whenReady().then(() => {
-  createWindow();
-
   session.defaultSession.setDisplayMediaRequestHandler((request, callback) => {
     desktopCapturer.getSources({ types: ['screen', 'window'] }).then((sources) => {
       if (sources.length === 0) {
@@ -33,6 +31,8 @@ app.whenReady().then(() => {
       callback({});
     });
   }, { useSystemPicker: true });
+
+  createWindow();
 
   app.on('activate', function () {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
