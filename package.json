@@ -17,7 +17,7 @@
     "electron-builder": "^26.8.0"
   },
   "build": {
-    "appId": "org.jitsi.meet.electron.simple",
+    "appId": "com.github.csett86.jitsi-meet-simple",
     "productName": "Jitsi Meet Simple",
     "directories": {
       "buildResources": "resources"
@@ -29,6 +29,7 @@
       "renderer.js"
     ],
     "mac": {
+      "artifactName": "jitsi-meet-simple.${ext}",
       "category": "public.app-category.video",
       "target": [
         {
@@ -43,14 +44,25 @@
       "entitlements": "resources/entitlements.mac.plist",
       "extendInfo": {
         "NSCameraUsageDescription": "Jitsi Meet requires access to your camera in order to make video-calls.",
-        "NSMicrophoneUsageDescription": "Jitsi Meet requires access to your microphone in order to make calls (audio/video)."
+        "NSMicrophoneUsageDescription": "Jitsi Meet requires access to your microphone in order to make calls (audio/video).",
+        "NSCameraUseContinuityCameraDeviceType": "Jitsi Meet can use your iPhone as a camera and microphone if you select it."
       }
     },
     "win": {
+      "artifactName": "jitsi-meet-simple.${ext}",
       "target": "nsis"
     },
     "linux": {
-      "target": "AppImage",
+      "artifactName": "jitsi-meet-simple-${arch}.${ext}",
+      "target": [
+        {
+          "arch": [
+            "x64",
+            "arm64"
+          ],
+          "target": "AppImage"
+        }
+      ],
       "category": "Network"
     }
   }
