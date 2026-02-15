@@ -27,9 +27,12 @@ jobs:
           cache: 'npm'
       - run: npm ci
       - run: npm run dist
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/upload-artifact@v6
         with:
           name: linux-binaries
+          if-no-files-found: error
           path: |
             dist/jitsi-meet-simple-x86_64.AppImage
             dist/jitsi-meet-simple-arm64.AppImage
@@ -58,9 +61,12 @@ jobs:
           echo '${{ secrets.api_key }}' > ~/private_keys/AuthKey_${{ secrets.api_key_id }}.p8
       - run: npm ci
       - run: npm run dist
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/upload-artifact@v6
         with:
           name: mac-binaries
+          if-no-files-found: error
           path: |
             dist/jitsi-meet-simple.dmg
             dist/jitsi-meet-simple.zip
@@ -75,9 +81,12 @@ jobs:
           cache: 'npm'
       - run: npm ci
       - run: npm run dist
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/upload-artifact@v6
         with:
           name: windows-binaries
+          if-no-files-found: error
           path: |
             dist/jitsi-meet-simple.exe
             dist/latest.yml
