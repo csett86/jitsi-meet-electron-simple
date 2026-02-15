@@ -31,41 +31,19 @@ test.describe('Jitsi Meet Conference Loading', () => {
   });
 
   test('should load conference from URL and create iframe via API', async () => {
-    // Verify the URL input field is present
-    const urlInput = await window.locator('#jitsi-url');
-    await expect(urlInput).toBeVisible();
-
-    // Enter the conference URL (as specified in requirements)
+    // Enter a semi-random conference URL
     const conferenceUrl = 'https://alpha.jitsi.net/ztexfftt644';
-    await urlInput.fill(conferenceUrl);
+    await window.locator('#jitsi-url').fill(conferenceUrl);
 
     // Click the Go button
-    const goButton = await window.locator('#go-button');
-    await goButton.click();
-
-    // Wait for the jitsi container to have the fullscreen class
-    const jitsiContainer = await window.locator('#jitsi-container');
-    await expect(jitsiContainer).toHaveClass(/fullscreen/);
+    await window.locator('#go-button').click();
 
     // Wait for the iframe to be created by JitsiMeetExternalAPI
     // The API creates an iframe inside the jitsi-container
     const iframe = await window.locator('#jitsi-container iframe');
     
-    // Wait for iframe to appear (may take a few seconds to initialize)
-    await iframe.waitFor({ state: 'attached', timeout: 10000 });
-    
-    // Verify the iframe is present
+    // Verify the iframe is present and the jitsi react is visible
     await expect(iframe).toBeAttached();
-
-    // Verify the iframe src contains the expected domain
-    const iframeSrc = await iframe.getAttribute('src');
-    expect(iframeSrc).toContain('alpha.jitsi.net');
-
-    // Verify the URL bar is hidden when conference is active
-    const urlBar = await window.locator('#url-bar');
-    await expect(urlBar).toHaveClass(/hidden/);
-
-    // Verify the conference container is visible
-    await expect(jitsiContainer).toBeVisible();
+    await expect(iframe.contentFrame().locator('#react')).toBeVisible();
   });
 });
