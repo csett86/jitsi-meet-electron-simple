@@ -42,8 +42,8 @@ test.describe('Jitsi Meet Conference Loading', () => {
     // The API creates an iframe inside the jitsi-container
     const iframe = await window.locator('#jitsi-container iframe');
     
-    // Verify the iframe is present and the jitsi react is visible
+    // Verify the iframe is present and the title of the conference is visible on prejoin
     await expect(iframe).toBeAttached();
-    await expect(iframe.contentFrame().locator('#react')).toBeVisible();
+    await expect(iframe.contentFrame().getByText('Ztexfftt 644')).toBeVisible();
   });
 });
