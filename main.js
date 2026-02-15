@@ -23,12 +23,12 @@ app.whenReady().then(() => {
   createWindow();
 
   session.defaultSession.setDisplayMediaRequestHandler((request, callback) => {
-    desktopCapturer.getSources({ types: ['screen'] }).then((sources) => {
+    desktopCapturer.getSources({ types: ['screen', 'window'] }).then((sources) => {
       if (sources.length === 0) {
         callback({});
         return;
       }
-      callback({ video: sources[0], audio: 'loopback' });
+      callback({ video: sources[0] });
     }).catch(() => {
       callback({});
     });
