@@ -9,8 +9,12 @@
     "test:ci": "xvfb-run -a npm test",
     "test": "playwright test"
   },
-  "author": "",
+  "author": "Christoph Settgast",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/csett86/jitsi-meet-electron-simple.git"
+  },
   "dependencies": {
     "electron-updater": "^6.7.3"
   },
