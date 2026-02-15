@@ -32,7 +32,8 @@ test.describe('Jitsi Meet Conference Loading', () => {
 
   test('should load conference from URL and create iframe via API', async () => {
     // Enter a semi-random conference URL
-    const conferenceUrl = 'https://alpha.jitsi.net/ztexfftt644';
+    const roomName = Math.random().toString(36).replace(/[0-9]/g, '').substring(1);
+    const conferenceUrl = 'https://alpha.jitsi.net/'.concat(roomName);
     await window.locator('#jitsi-url').fill(conferenceUrl);
 
     // Click the Go button
@@ -42,8 +43,8 @@ test.describe('Jitsi Meet Conference Loading', () => {
     // The API creates an iframe inside the jitsi-container
     const iframe = await window.locator('#jitsi-container iframe');
     
-    // Verify the iframe is present and the jitsi react is visible
+    // Verify the iframe is present and the title of the conference is visible on prejoin
     await expect(iframe).toBeAttached();
-    await expect(iframe.contentFrame().locator('#react')).toBeVisible();
+    await expect(iframe.contentFrame().getByText(roomName)).toBeVisible();
   });
 });
