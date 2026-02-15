@@ -29,7 +29,8 @@
       "main.js",
       "index.html",
       "external_api.js",
-      "renderer.js"
+      "renderer.js",
+      "node_modules/**/*"
     ],
     "mac": {
       "artifactName": "jitsi-meet-simple.${ext}",
