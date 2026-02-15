@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "build": "electron-builder",
+    "dist": "electron-builder",
     "test:ci": "xvfb-run -a npm test",
     "test": "playwright test"
   },
@@ -13,14 +13,14 @@
   "license": "MIT",
   "devDependencies": {
     "@playwright/test": "^1.58.2",
-    "electron": "^40.1.0",
-    "electron-builder": "^26.7.0"
+    "electron": "^40.4.1",
+    "electron-builder": "^26.8.0"
   },
   "build": {
-    "appId": "com.jitsi.meet.electron.simple",
+    "appId": "org.jitsi.meet.electron.simple",
     "productName": "Jitsi Meet Simple",
     "directories": {
-      "output": "dist"
+      "buildResources": "resources"
     },
     "files": [
       "main.js",
@@ -29,7 +29,22 @@
       "renderer.js"
     ],
     "mac": {
-      "category": "public.app-category.video"
+      "category": "public.app-category.video",
+      "target": [
+        {
+          "arch": "universal",
+          "target": "dmg"
+        },
+        {
+          "arch": "universal",
+          "target": "zip"
+        }
+      ],
+      "entitlements": "resources/entitlements.mac.plist",
+      "extendInfo": {
+        "NSCameraUsageDescription": "Jitsi Meet requires access to your camera in order to make video-calls.",
+        "NSMicrophoneUsageDescription": "Jitsi Meet requires access to your microphone in order to make calls (audio/video)."
+      }
     },
     "win": {
       "target": "nsis"
