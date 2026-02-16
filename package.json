@@ -22,7 +22,7 @@
   "devDependencies": {
     "@playwright/test": "^1.58.2",
     "electron": "^40.4.1",
-    "electron-builder": "^26.8.0"
+    "electron-builder": "^26.8.1"
   },
   "build": {
     "appId": "com.github.csett86.jitsi-meet-simple",
