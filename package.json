@@ -1,6 +1,6 @@
 {
   "name": "jitsi-meet-electron-simple",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A simple electron app for jitsi meet",
   "main": "main.js",
   "scripts": {
