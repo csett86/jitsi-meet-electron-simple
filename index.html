@@ -28,9 +28,16 @@
             flex: 1;
             padding: 8px;
             font-size: 14px;
+            background-color: #ffffff;
+            color: #1a1a1a;
             border: 1px solid #ccc;
             border-radius: 4px;
             margin-right: 10px;
+        }
+
+        #jitsi-url:-webkit-autofill {
+            -webkit-box-shadow: 0 0 0 1000px #ffffff inset;
+            -webkit-text-fill-color: #1a1a1a;
         }
         
         #go-button {
@@ -68,6 +75,45 @@
             align-items: center;
             font-size: 18px;
             color: #666;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #1a1a2e;
+                color: #e0e0e0;
+            }
+
+            #url-bar {
+                background-color: #16213e;
+                border-bottom-color: #0f3460;
+            }
+
+            #jitsi-url {
+                background-color: #0f3460;
+                color: #e0e0e0;
+                border-color: #1a4a8a;
+            }
+
+            #jitsi-url:-webkit-autofill {
+                -webkit-box-shadow: 0 0 0 1000px #0f3460 inset;
+                -webkit-text-fill-color: #e0e0e0;
+            }
+
+            #jitsi-url::placeholder {
+                color: #9090a0;
+            }
+
+            #go-button {
+                background-color: #1a6fd4;
+            }
+
+            #go-button:hover {
+                background-color: #1558ad;
+            }
+
+            #welcome-message {
+                color: #9090a0;
+            }
         }
     </style>
 </head>
