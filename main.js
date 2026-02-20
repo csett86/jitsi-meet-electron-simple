@@ -1,10 +1,8 @@
 const { app, BrowserWindow, desktopCapturer, session } = require('electron');
 const { autoUpdater } = require("electron-updater");
 
-let mainWindow;
-
 function createWindow() {
-  mainWindow = new BrowserWindow({
+  const win = new BrowserWindow({
     width: 1200,
     height: 800,
     webPreferences: {
@@ -13,35 +11,28 @@ function createWindow() {
     }
   });
 
-  mainWindow.loadFile('index.html');
-
-  mainWindow.on('closed', function () {
-    mainWindow = null;
-  });
+  win.loadFile('index.html');
 }
 
 app.whenReady().then(() => {
-  session.defaultSession.setDisplayMediaRequestHandler((request, callback) => {
-    desktopCapturer.getSources({ types: ['screen', 'window'] }).then((sources) => {
-      if (sources.length === 0) {
-        callback({});
-        return;
-      }
-      callback({ video: sources[0] });
-    }).catch(() => {
+  session.defaultSession.setDisplayMediaRequestHandler(async (_request, callback) => {
+    try {
+      const sources = await desktopCapturer.getSources({ types: ['screen', 'window'] });
+      callback(sources.length > 0 ? { video: sources[0] } : {});
+    } catch {
       callback({});
-    });
+    }
   }, { useSystemPicker: true });
 
   autoUpdater.checkForUpdatesAndNotify();
 
   createWindow();
 
-  app.on('activate', function () {
+  app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
   });
 });
 
-app.on('window-all-closed', function () {
+app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit();
 });
