@@ -24,11 +24,11 @@ function saveToHistory(url) {
 function populateHistory() {
     if (!roomHistory) return;
     roomHistory.innerHTML = '';
-    for (const url of getHistory()) {
+    getHistory().forEach(url => {
         const option = document.createElement('option');
         option.value = url;
         roomHistory.appendChild(option);
-    }
+    });
 }
 
 // Populate history on load
