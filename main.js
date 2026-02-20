@@ -1,9 +1,13 @@
-const { app, BrowserWindow, desktopCapturer, session } = require('electron');
+const { app, BrowserWindow, desktopCapturer, session, Menu } = require('electron');
 const { autoUpdater } = require("electron-updater");
 
 let mainWindow;
 
 function createWindow() {
+  if (process.platform !== 'darwin') {
+    Menu.setApplicationMenu(null);
+  }
+
   mainWindow = new BrowserWindow({
     width: 1200,
     height: 800,
