@@ -1,4 +1,4 @@
-const { app, BrowserWindow, desktopCapturer, session } = require('electron');
+const { app, BrowserWindow, desktopCapturer, Menu, session } = require('electron');
 const { autoUpdater } = require("electron-updater");
 
 function createWindow() {
@@ -15,6 +15,10 @@ function createWindow() {
 }
 
 app.whenReady().then(() => {
+  if (process.platform !== 'darwin') {
+    Menu.setApplicationMenu(null);
+  }
+
   session.defaultSession.setDisplayMediaRequestHandler(async (_request, callback) => {
     try {
       const sources = await desktopCapturer.getSources({ types: ['screen', 'window'] });
