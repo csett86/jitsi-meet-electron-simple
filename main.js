@@ -1,5 +1,6 @@
-const { app, BrowserWindow, desktopCapturer, session, Menu } = require('electron');
-const { autoUpdater } = require("electron-updater");
+import { app, BrowserWindow, desktopCapturer, session, Menu } from 'electron';
+import pkg from 'electron-updater';
+const { autoUpdater } = pkg;
 
 function createWindow() {
   if (process.platform !== 'darwin') {

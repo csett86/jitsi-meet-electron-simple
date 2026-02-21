@@ -3,6 +3,7 @@
   "version": "1.0.2",
   "description": "A simple electron app for jitsi meet",
   "main": "main.js",
+  "type": "module",
   "scripts": {
     "start": "electron . --no-sandbox",
     "dist": "electron-builder",
