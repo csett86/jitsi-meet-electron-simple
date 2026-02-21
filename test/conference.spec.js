@@ -1,6 +1,9 @@
-const { test, expect } = require('@playwright/test');
-const { _electron: electron } = require('playwright');
-const path = require('path');
+import { test, expect } from '@playwright/test';
+import { _electron as electron } from 'playwright';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 test.describe('Jitsi Meet Conference Loading', () => {
   let electronApp;
@@ -10,7 +13,7 @@ test.describe('Jitsi Meet Conference Loading', () => {
     // Launch Electron app with sandbox disabled for testing
     electronApp = await electron.launch({
       args: [
-        path.join(__dirname, '..', 'main.js'),
+        join(__dirname, '..', 'main.js'),
         '--no-sandbox',
         '--disable-gpu'
       ]
