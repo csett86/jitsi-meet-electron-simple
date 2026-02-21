@@ -7,7 +7,7 @@ test.describe('Jitsi Meet Conference Loading', () => {
   let window;
 
   test.beforeAll(async () => {
-    electronApp = await electron.launch({ args: ['main.js'] });
+    electronApp = await electron.launch({ args: ['main.js', '--no-sandbox'] });
     window = await electronApp.firstWindow();
     await window.waitForLoadState('domcontentloaded');
   });
