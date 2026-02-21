@@ -15,7 +15,6 @@ on:
 
 permissions:
   contents: write
-  pull-requests: write
 
 jobs:
   bump-version:
@@ -35,11 +34,7 @@ jobs:
         id: version
         run: echo "version=$(node -p "require('./package.json').version")" >> "$GITHUB_OUTPUT"
 
-      - name: Create pull request
-        uses: peter-evans/create-pull-request@v8
-        with:
-          commit-message: 'chore: bump version to ${{ steps.version.outputs.version }}'
-          branch: 'bump-version/${{ steps.version.outputs.version }}'
-          title: 'chore: bump version to ${{ steps.version.outputs.version }}'
-          body: 'Automated version bump to `${{ steps.version.outputs.version }}` (${{ github.event.inputs.bump }}).'
-          delete-branch: true
+      - name: Commit and push
+        run: |
+          git commit -a -m "${{ steps.version.outputs.version }}"
+          git push
