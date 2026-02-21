@@ -1,36 +1,18 @@
 import { test, expect } from '@playwright/test';
 import { _electron as electron } from 'playwright';
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
 
 test.describe('Jitsi Meet Conference Loading', () => {
   let electronApp;
   let window;
 
   test.beforeAll(async () => {
-    // Launch Electron app with sandbox disabled for testing
-    electronApp = await electron.launch({
-      args: [
-        join(__dirname, '..', 'main.js'),
-        '--no-sandbox',
-        '--disable-gpu'
-      ]
-    });
-
-    // Get the first window that the app opens
+    electronApp = await electron.launch({ args: ['main.js', '--no-sandbox'] });
     window = await electronApp.firstWindow();
-    
-    // Wait for the window to be ready
-    await window.waitForLoadState('domcontentloaded');
   });
 
   test.afterAll(async () => {
-    // Close the app
-    if (electronApp) {
-      await electronApp.close();
-    }
+    await electronApp.close();
   });
 
   test('should load conference from URL and create iframe via API', async () => {
