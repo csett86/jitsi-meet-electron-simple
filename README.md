@@ -24,11 +24,7 @@ Download the latest release:
 - otherwise only the first screen is shared full-screen
 - Light mode and dark mode
 
-## Dependencies
-- electron: For the desktop application framework
-- electron-builder: For building distributable packages
-
-## Testing
+## Development and Testing
 ```bash
 npm test
 ```
