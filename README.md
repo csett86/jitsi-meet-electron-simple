@@ -6,8 +6,8 @@ A minimal Electron-based desktop application for joining Jitsi Meet conferences.
 
 Download the latest release:
 
-- **macOS**: [jitsi-meet-simple.dmg](https://github.com/csett86/jitsi-meet-electron-simple/releases/latest/download/jitsi-meet-simple.dmg)
-- **Windows**: [jitsi-meet-simple.exe](https://github.com/csett86/jitsi-meet-electron-simple/releases/latest/download/jitsi-meet-simple.exe)
+- **macOS (Apple Silicon and Intel)**: [jitsi-meet-simple.dmg](https://github.com/csett86/jitsi-meet-electron-simple/releases/latest/download/jitsi-meet-simple.dmg)
+- **Windows (x86_64 and arm64)**: [jitsi-meet-simple.exe](https://github.com/csett86/jitsi-meet-electron-simple/releases/latest/download/jitsi-meet-simple.exe)
 - **Linux (x86_64)**: [jitsi-meet-simple-x86_64.AppImage](https://github.com/csett86/jitsi-meet-electron-simple/releases/latest/download/jitsi-meet-simple-x86_64.AppImage)
 - **Linux (arm64)**: [jitsi-meet-simple-arm64.AppImage](https://github.com/csett86/jitsi-meet-electron-simple/releases/latest/download/jitsi-meet-simple-arm64.AppImage)
 
