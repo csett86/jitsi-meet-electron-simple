@@ -1,25 +1,15 @@
-# jitsi-meet-electron-simple
-A simple electron app for jitsi meet
+# Jitsi Meet Simple
 
-## Description
 A minimal Electron-based desktop application for joining Jitsi Meet conferences. Features a simple interface with a URL input field and "Go" button to connect to any Jitsi Meet room.
 
-## Installation
-```bash
-npm install
-```
+## Download
 
-## Running the App
-```bash
-npm start
-```
+Download the latest release:
 
-## Building the App
-```bash
-npm run build
-```
-
-The built application will be available in the `dist` folder.
+- **macOS**: [jitsi-meet-simple.dmg](https://github.com/csett86/jitsi-meet-electron-simple/releases/latest/download/jitsi-meet-simple.dmg)
+- **Windows**: [jitsi-meet-simple.exe](https://github.com/csett86/jitsi-meet-electron-simple/releases/latest/download/jitsi-meet-simple.exe)
+- **Linux (x86_64)**: [jitsi-meet-simple-x86_64.AppImage](https://github.com/csett86/jitsi-meet-electron-simple/releases/latest/download/jitsi-meet-simple-x86_64.AppImage)
+- **Linux (arm64)**: [jitsi-meet-simple-arm64.AppImage](https://github.com/csett86/jitsi-meet-electron-simple/releases/latest/download/jitsi-meet-simple-arm64.AppImage)
 
 ## Usage
 1. Launch the application
@@ -31,12 +21,9 @@ The built application will be available in the `dist` folder.
 - Join Jitsi Meet
 - Support screen sharing, if possible with native screensharing pickers (macOS 15+, Linux Wayland)
 - otherwise only the first screen is shared full-screen
+- Light mode and dark mode
 
-## Dependencies
-- electron: For the desktop application framework
-- electron-builder: For building distributable packages
-
-## Testing
+## Development and Testing
 ```bash
 npm test
 ```
