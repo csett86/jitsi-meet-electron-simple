@@ -9,13 +9,10 @@ test.describe('Jitsi Meet Conference Loading', () => {
   test.beforeAll(async () => {
     electronApp = await electron.launch({ args: ['main.js', '--no-sandbox'] });
     window = await electronApp.firstWindow();
-    await window.waitForLoadState('domcontentloaded');
   });
 
   test.afterAll(async () => {
-    if (electronApp) {
-      await electronApp.close();
-    }
+    await electronApp.close();
   });
 
   test('should load conference from URL and create iframe via API', async () => {
