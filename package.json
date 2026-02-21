@@ -4,7 +4,7 @@
   "description": "A simple electron app for jitsi meet",
   "main": "main.js",
   "scripts": {
-    "start": "electron .",
+    "start": "electron . --no-sandbox",
     "dist": "electron-builder",
     "publish": "electron-builder --publish always",
     "test:ci": "xvfb-run -a npm test",
