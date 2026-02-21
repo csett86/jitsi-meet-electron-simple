@@ -1,5 +1,6 @@
 import { app, BrowserWindow, desktopCapturer, session, Menu } from 'electron';
-import { autoUpdater } from 'electron-updater';
+import pkg from 'electron-updater';
+const { autoUpdater } = pkg;
 
 function createWindow() {
   if (process.platform !== 'darwin') {
