@@ -36,7 +36,7 @@ jobs:
         run: echo "version=$(node -p "require('./package.json').version")" >> "$GITHUB_OUTPUT"
 
       - name: Create pull request
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
           commit-message: 'chore: bump version to ${{ steps.version.outputs.version }}'
           branch: 'bump-version/${{ steps.version.outputs.version }}'
