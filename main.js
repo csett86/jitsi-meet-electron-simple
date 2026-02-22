@@ -2,12 +2,64 @@ import { app, BrowserWindow, desktopCapturer, session, Menu } from 'electron';
 import pkg from 'electron-updater';
 const { autoUpdater } = pkg;
 
+const PROTOCOL_SCHEME = 'jitsi-meet';
+const PROTOCOL_PREFIX = `${PROTOCOL_SCHEME}://`;
+
+let mainWindow = null;
+let pendingUrl = null;
+
+function protocolUrlToHttps(url) {
+  if (url && url.startsWith(PROTOCOL_PREFIX)) {
+    return url.replace(PROTOCOL_PREFIX, 'https://');
+  }
+  return null;
+}
+
+function applyProtocolUrl(url) {
+  if (mainWindow && mainWindow.webContents) {
+    mainWindow.webContents.executeJavaScript(
+      `document.getElementById('jitsi-url').value = ${JSON.stringify(url)}; loadJitsiMeet();`
+    );
+  }
+}
+
+function handleProtocolUrl(url) {
+  const httpsUrl = protocolUrlToHttps(url);
+  if (!httpsUrl) return;
+
+  if (mainWindow) {
+    applyProtocolUrl(httpsUrl);
+  } else {
+    pendingUrl = httpsUrl;
+  }
+}
+
+app.setAsDefaultProtocolClient(PROTOCOL_SCHEME);
+
+const gotTheLock = process.platform === 'darwin' ? true : app.requestSingleInstanceLock();
+
+if (!gotTheLock) {
+  app.quit();
+} else {
+  app.on('second-instance', (_event, commandLine) => {
+    if (mainWindow) {
+      if (mainWindow.isMinimized()) mainWindow.restore();
+      mainWindow.focus();
+    }
+
+    const protocolArg = commandLine.find(arg => arg.startsWith(PROTOCOL_PREFIX));
+    if (protocolArg) {
+      handleProtocolUrl(protocolArg);
+    }
+  });
+}
+
 function createWindow() {
   if (process.platform !== 'darwin') {
     Menu.setApplicationMenu(null);
   }
 
-  const win = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 1200,
     height: 800,
     webPreferences: {
@@ -16,7 +68,14 @@ function createWindow() {
     }
   });
 
-  win.loadFile('index.html');
+  mainWindow.loadFile('index.html');
+
+  mainWindow.webContents.once('did-finish-load', () => {
+    if (pendingUrl) {
+      applyProtocolUrl(pendingUrl);
+      pendingUrl = null;
+    }
+  });
 }
 
 app.whenReady().then(() => {
@@ -31,11 +90,21 @@ app.whenReady().then(() => {
 
   autoUpdater.checkForUpdatesAndNotify();
 
+  const protocolArg = process.argv.find(arg => arg.startsWith(PROTOCOL_PREFIX));
+  if (protocolArg) {
+    pendingUrl = protocolUrlToHttps(protocolArg);
+  }
+
   createWindow();
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
   });
+});
+
+app.on('open-url', (event, url) => {
+  event.preventDefault();
+  handleProtocolUrl(url);
 });
 
 app.on('window-all-closed', () => {
