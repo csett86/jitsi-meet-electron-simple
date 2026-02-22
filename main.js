@@ -6,16 +6,7 @@ const { autoUpdater } = pkg;
 let mainWindow;
 let protocolUrl = null;
 
-// Register the jitsi-meet:// protocol.
-// In development (process.defaultApp), pass the resolved main script path
-// so the protocol handler re-launches with the correct entry point.
-if (process.defaultApp) {
-  if (process.argv.length >= 2) {
-    app.setAsDefaultProtocolClient('jitsi-meet', process.execPath, [path.resolve(process.argv[1])]);
-  }
-} else {
-  app.setAsDefaultProtocolClient('jitsi-meet');
-}
+app.setAsDefaultProtocolClient('jitsi-meet');
 
 /**
  * Convert a jitsi-meet:// URL to https://.

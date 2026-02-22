@@ -81,8 +81,7 @@
           "target": "AppImage"
         }
       ],
-      "category": "Network",
-      "mimeType": ["x-scheme-handler/jitsi-meet"]
+      "category": "Network"
     },
     "protocols": [
       {
