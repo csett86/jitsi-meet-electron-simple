@@ -33,3 +33,35 @@ test.describe('Jitsi Meet Conference Loading', () => {
     await expect(iframe.contentFrame().getByText(roomName)).toBeVisible();
   });
 });
+
+test.describe('Protocol URL Handling', () => {
+  let electronApp;
+  let window;
+
+  test.afterEach(async () => {
+    if (electronApp) {
+      await electronApp.close();
+    }
+  });
+
+  test('should handle jitsi-meet:// protocol URL and load conference', async () => {
+    // Launch the app with a jitsi-meet:// protocol URL as a command line argument
+    const roomName = Math.random().toString(36).replace(/[0-9]/g, '').substring(1);
+    const protocolUrl = `jitsi-meet://alpha.jitsi.net/${roomName}`;
+
+    electronApp = await electron.launch({
+      args: ['main.js', '--no-sandbox', protocolUrl]
+    });
+    window = await electronApp.firstWindow();
+
+    // The URL input should contain the converted https:// URL
+    await expect(window.locator('#jitsi-url')).toHaveValue(`https://alpha.jitsi.net/${roomName}`);
+
+    // Wait for the iframe to be created by JitsiMeetExternalAPI
+    const iframe = window.locator('#jitsi-container iframe');
+
+    // Verify the iframe is present and the title of the conference is visible on prejoin
+    await expect(iframe).toBeAttached();
+    await expect(iframe.contentFrame().getByText(roomName)).toBeVisible();
+  });
+});
