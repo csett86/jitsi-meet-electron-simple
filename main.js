@@ -36,6 +36,24 @@ function handleProtocolUrl(url) {
 
 app.setAsDefaultProtocolClient(PROTOCOL_SCHEME);
 
+const gotTheLock = process.platform === 'darwin' ? true : app.requestSingleInstanceLock();
+
+if (!gotTheLock) {
+  app.quit();
+} else {
+  app.on('second-instance', (_event, commandLine) => {
+    if (mainWindow) {
+      if (mainWindow.isMinimized()) mainWindow.restore();
+      mainWindow.focus();
+    }
+
+    const protocolArg = commandLine.find(arg => arg.startsWith(PROTOCOL_PREFIX));
+    if (protocolArg) {
+      handleProtocolUrl(protocolArg);
+    }
+  });
+}
+
 function createWindow() {
   if (process.platform !== 'darwin') {
     Menu.setApplicationMenu(null);
@@ -84,30 +102,10 @@ app.whenReady().then(() => {
   });
 });
 
-if (process.platform === 'darwin') {
-  app.on('open-url', (event, url) => {
-    event.preventDefault();
-    handleProtocolUrl(url);
-  });
-} else {
-  const gotTheLock = app.requestSingleInstanceLock();
-
-  if (!gotTheLock) {
-    app.quit();
-  } else {
-    app.on('second-instance', (_event, commandLine) => {
-      if (mainWindow) {
-        if (mainWindow.isMinimized()) mainWindow.restore();
-        mainWindow.focus();
-      }
-
-      const protocolArg = commandLine.find(arg => arg.startsWith(PROTOCOL_PREFIX));
-      if (protocolArg) {
-        handleProtocolUrl(protocolArg);
-      }
-    });
-  }
-}
+app.on('open-url', (event, url) => {
+  event.preventDefault();
+  handleProtocolUrl(url);
+});
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit();

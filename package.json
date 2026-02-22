@@ -55,7 +55,8 @@
       "extendInfo": {
         "NSCameraUsageDescription": "Jitsi Meet requires access to your camera in order to make video-calls.",
         "NSMicrophoneUsageDescription": "Jitsi Meet requires access to your microphone in order to make calls (audio/video).",
-        "NSCameraUseContinuityCameraDeviceType": "Jitsi Meet can use your iPhone as a camera and microphone if you select it."
+        "NSCameraUseContinuityCameraDeviceType": "Jitsi Meet can use your iPhone as a camera and microphone if you select it.",
+        "LSMultipleInstancesProhibited": true
       }
     },
     "win": {
@@ -85,7 +86,7 @@
     },
     "protocols": [
       {
-        "name": "Jitsi Meet",
+        "name": "Jitsi Meet Simple",
         "schemes": ["jitsi-meet"]
       }
     ]
