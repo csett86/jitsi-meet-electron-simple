@@ -66,11 +66,29 @@ function loadJitsiMeet() {
         return;
     }
 
+    const hashParameters = new URLSearchParams(parsedUrl.hash.substring(1));
+    const configOverwrite = {};
+    let jwt;
+
+    hashParameters.forEach((value, key) => {
+        if (key.startsWith('config.')) {
+            configOverwrite[key.substring('config.'.length)] = value;
+        } else if (key === 'jwt') {
+            jwt = value;
+        }
+    });
+
+    const options = {
+        configOverwrite,
+        jwt,
+        parentNode: jitsiContainer,
+        roomName
+    };
+
     saveToHistory(url);
 
     const api = new JitsiMeetExternalAPI(parsedUrl.hostname, {
-        roomName,
-        parentNode: jitsiContainer
+        ...options
     });
 
     const originalMessage = welcomeMessage.innerText;
