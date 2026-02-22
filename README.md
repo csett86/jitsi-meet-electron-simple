@@ -13,12 +13,12 @@ Download the latest release:
 
 ## Usage
 1. Launch the application
-2. Enter a Jitsi Meet URL in the input field (e.g., `https://meet.jit.si/yourroom`)
+2. Enter a Jitsi Meet URL in the input field
 3. Click the "Go" button or press Enter
 4. The Jitsi conference will load in the window
 
 ## Features
-- Join Jitsi Meet
+- Join Jitsi Meet (not yet as moderator on meet.jit.si, as jwt callback is not yet implemented)
 - Support screen sharing, if possible with native screensharing pickers (macOS 15+, Linux Wayland)
 - otherwise only the first screen is shared full-screen
 - Light mode and dark mode
