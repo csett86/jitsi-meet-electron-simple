@@ -1,12 +1,21 @@
 import { app, BrowserWindow, desktopCapturer, session, Menu } from 'electron';
 import pkg from 'electron-updater';
+import path from 'node:path';
 const { autoUpdater } = pkg;
 
 let mainWindow;
 let protocolUrl = null;
 
-// Register the jitsi-meet:// protocol
-app.setAsDefaultProtocolClient('jitsi-meet');
+// Register the jitsi-meet:// protocol.
+// In development (process.defaultApp), pass the resolved main script path
+// so the protocol handler re-launches with the correct entry point.
+if (process.defaultApp) {
+  if (process.argv.length >= 2) {
+    app.setAsDefaultProtocolClient('jitsi-meet', process.execPath, [path.resolve(process.argv[1])]);
+  }
+} else {
+  app.setAsDefaultProtocolClient('jitsi-meet');
+}
 
 /**
  * Convert a jitsi-meet:// URL to https://.
@@ -47,59 +56,80 @@ if (protocolArg) {
   protocolUrl = convertProtocolUrl(protocolArg);
 }
 
-// macOS: handle open-url event
-app.on('open-url', (event, url) => {
-  event.preventDefault();
-  handleProtocolUrl(url);
-});
+// Enforce single instance so protocol links focus the existing window
+// instead of opening a new one (Windows/Linux).
+const gotTheLock = app.requestSingleInstanceLock();
 
-function createWindow() {
-  if (process.platform !== 'darwin') {
-    Menu.setApplicationMenu(null);
+if (!gotTheLock) {
+  app.quit();
+} else {
+  app.on('second-instance', (_event, commandLine) => {
+    // Focus existing window when a second instance is launched.
+    if (mainWindow) {
+      if (mainWindow.isMinimized()) mainWindow.restore();
+      mainWindow.focus();
+    }
+    // Extract and handle the protocol URL from the command line.
+    const url = commandLine.find(arg => arg.startsWith('jitsi-meet://'));
+    if (url) {
+      handleProtocolUrl(url);
+    }
+  });
+
+  // macOS: handle open-url event
+  app.on('open-url', (event, url) => {
+    event.preventDefault();
+    handleProtocolUrl(url);
+  });
+
+  function createWindow() {
+    if (process.platform !== 'darwin') {
+      Menu.setApplicationMenu(null);
+    }
+
+    const win = new BrowserWindow({
+      width: 1200,
+      height: 800,
+      webPreferences: {
+        nodeIntegration: false,
+        contextIsolation: true
+      }
+    });
+
+    mainWindow = win;
+
+    win.webContents.on('did-finish-load', () => {
+      if (protocolUrl) {
+        win.webContents.executeJavaScript(
+          `document.getElementById('jitsi-url').value = ${JSON.stringify(protocolUrl)}; loadJitsiMeet();`
+        );
+        protocolUrl = null;
+      }
+    });
+
+    win.loadFile('index.html');
   }
 
-  const win = new BrowserWindow({
-    width: 1200,
-    height: 800,
-    webPreferences: {
-      nodeIntegration: false,
-      contextIsolation: true
-    }
+  app.whenReady().then(() => {
+    session.defaultSession.setDisplayMediaRequestHandler(async (_request, callback) => {
+      try {
+        const sources = await desktopCapturer.getSources({ types: ['screen', 'window'] });
+        callback(sources.length > 0 ? { video: sources[0] } : {});
+      } catch {
+        callback({});
+      }
+    }, { useSystemPicker: true });
+
+    autoUpdater.checkForUpdatesAndNotify();
+
+    createWindow();
+
+    app.on('activate', () => {
+      if (BrowserWindow.getAllWindows().length === 0) createWindow();
+    });
   });
 
-  mainWindow = win;
-
-  win.webContents.on('did-finish-load', () => {
-    if (protocolUrl) {
-      win.webContents.executeJavaScript(
-        `document.getElementById('jitsi-url').value = ${JSON.stringify(protocolUrl)}; loadJitsiMeet();`
-      );
-      protocolUrl = null;
-    }
+  app.on('window-all-closed', () => {
+    if (process.platform !== 'darwin') app.quit();
   });
-
-  win.loadFile('index.html');
 }
-
-app.whenReady().then(() => {
-  session.defaultSession.setDisplayMediaRequestHandler(async (_request, callback) => {
-    try {
-      const sources = await desktopCapturer.getSources({ types: ['screen', 'window'] });
-      callback(sources.length > 0 ? { video: sources[0] } : {});
-    } catch {
-      callback({});
-    }
-  }, { useSystemPicker: true });
-
-  autoUpdater.checkForUpdatesAndNotify();
-
-  createWindow();
-
-  app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0) createWindow();
-  });
-});
-
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') app.quit();
-});
