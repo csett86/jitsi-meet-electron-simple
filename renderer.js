@@ -71,11 +71,8 @@ function loadJitsiMeet() {
     let jwt;
 
     hashParameters.forEach((value, key) => {
-        console.log('key: ' + key + ' val: ' + value);
         if (key.startsWith('config.')) {
-            const configKey = key.substring('config.'.length);
-
-            configOverwrite[configKey] = value;
+            configOverwrite[key.substring('config.'.length)] = value;
         } else if (key === 'jwt') {
             jwt = value;
         }
