@@ -7,9 +7,7 @@ test.describe('Protocol URL Handling', () => {
     const roomName = Math.random().toString(36).replace(/[0-9]/g, '').substring(1);
     const protocolUrl = `jitsi-meet://alpha.jitsi.net/${roomName}`;
 
-    const electronApp = await electron.launch({
-      args: ['main.js', '--no-sandbox', protocolUrl]
-    });
+    const electronApp = await electron.launch({ args: ['main.js', '--no-sandbox', protocolUrl] });
     const window = await electronApp.firstWindow();
 
     try {

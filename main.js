@@ -60,7 +60,7 @@ function createWindow() {
   });
 }
 
-function initApp() {
+app.whenReady().then(() => {
   session.defaultSession.setDisplayMediaRequestHandler(async (_request, callback) => {
     try {
       const sources = await desktopCapturer.getSources({ types: ['screen', 'window'] });
@@ -82,15 +82,13 @@ function initApp() {
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
   });
-}
+});
 
 if (process.platform === 'darwin') {
   app.on('open-url', (event, url) => {
     event.preventDefault();
     handleProtocolUrl(url);
   });
-
-  app.whenReady().then(initApp);
 } else {
   const gotTheLock = app.requestSingleInstanceLock();
 
@@ -108,8 +106,6 @@ if (process.platform === 'darwin') {
         handleProtocolUrl(protocolArg);
       }
     });
-
-    app.whenReady().then(initApp);
   }
 }
 

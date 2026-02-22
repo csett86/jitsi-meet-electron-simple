@@ -82,6 +82,12 @@
         }
       ],
       "category": "Network"
-    }
+    },
+    "protocols": [
+      {
+        "name": "Jitsi Meet",
+        "schemes": ["jitsi-meet"]
+      }
+    ]
   }
 }
