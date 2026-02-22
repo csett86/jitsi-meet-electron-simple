@@ -2,12 +2,15 @@ import { app, BrowserWindow, desktopCapturer, session, Menu } from 'electron';
 import pkg from 'electron-updater';
 const { autoUpdater } = pkg;
 
+const PROTOCOL_SCHEME = 'jitsi-meet';
+const PROTOCOL_PREFIX = `${PROTOCOL_SCHEME}://`;
+
 let mainWindow = null;
 let pendingUrl = null;
 
 function protocolUrlToHttps(url) {
-  if (url && url.startsWith('jitsi-meet://')) {
-    return url.replace('jitsi-meet://', 'https://');
+  if (url && url.startsWith(PROTOCOL_PREFIX)) {
+    return url.replace(PROTOCOL_PREFIX, 'https://');
   }
   return null;
 }
@@ -31,7 +34,7 @@ function handleProtocolUrl(url) {
   }
 }
 
-app.setAsDefaultProtocolClient('jitsi-meet');
+app.setAsDefaultProtocolClient(PROTOCOL_SCHEME);
 
 function createWindow() {
   if (process.platform !== 'darwin') {
@@ -69,7 +72,7 @@ function initApp() {
 
   autoUpdater.checkForUpdatesAndNotify();
 
-  const protocolArg = process.argv.find(arg => arg.startsWith('jitsi-meet://'));
+  const protocolArg = process.argv.find(arg => arg.startsWith(PROTOCOL_PREFIX));
   if (protocolArg) {
     pendingUrl = protocolUrlToHttps(protocolArg);
   }
@@ -95,14 +98,14 @@ if (process.platform === 'darwin') {
     app.quit();
   } else {
     app.on('second-instance', (_event, commandLine) => {
-      const protocolArg = commandLine.find(arg => arg.startsWith('jitsi-meet://'));
-      if (protocolArg) {
-        handleProtocolUrl(protocolArg);
-      }
-
       if (mainWindow) {
         if (mainWindow.isMinimized()) mainWindow.restore();
         mainWindow.focus();
+      }
+
+      const protocolArg = commandLine.find(arg => arg.startsWith(PROTOCOL_PREFIX));
+      if (protocolArg) {
+        handleProtocolUrl(protocolArg);
       }
     });
 
