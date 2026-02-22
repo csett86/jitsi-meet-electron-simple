@@ -1,6 +1,5 @@
 import { app, BrowserWindow, desktopCapturer, session, Menu } from 'electron';
 import pkg from 'electron-updater';
-import path from 'node:path';
 const { autoUpdater } = pkg;
 
 let mainWindow;
