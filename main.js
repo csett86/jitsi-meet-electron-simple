@@ -33,11 +33,6 @@ function handleProtocolUrl(url) {
 
 app.setAsDefaultProtocolClient('jitsi-meet');
 
-app.on('open-url', (event, url) => {
-  event.preventDefault();
-  handleProtocolUrl(url);
-});
-
 function createWindow() {
   if (process.platform !== 'darwin') {
     Menu.setApplicationMenu(null);
@@ -62,7 +57,7 @@ function createWindow() {
   });
 }
 
-app.whenReady().then(() => {
+function initApp() {
   session.defaultSession.setDisplayMediaRequestHandler(async (_request, callback) => {
     try {
       const sources = await desktopCapturer.getSources({ types: ['screen', 'window'] });
@@ -84,7 +79,36 @@ app.whenReady().then(() => {
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
   });
-});
+}
+
+if (process.platform === 'darwin') {
+  app.on('open-url', (event, url) => {
+    event.preventDefault();
+    handleProtocolUrl(url);
+  });
+
+  app.whenReady().then(initApp);
+} else {
+  const gotTheLock = app.requestSingleInstanceLock();
+
+  if (!gotTheLock) {
+    app.quit();
+  } else {
+    app.on('second-instance', (_event, commandLine) => {
+      const protocolArg = commandLine.find(arg => arg.startsWith('jitsi-meet://'));
+      if (protocolArg) {
+        handleProtocolUrl(protocolArg);
+      }
+
+      if (mainWindow) {
+        if (mainWindow.isMinimized()) mainWindow.restore();
+        mainWindow.focus();
+      }
+    });
+
+    app.whenReady().then(initApp);
+  }
+}
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit();
