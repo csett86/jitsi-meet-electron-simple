@@ -2,6 +2,8 @@
 
 A minimal Electron-based desktop application for joining Jitsi Meet conferences. Features a simple interface with a URL input field and "Go" button to connect to any Jitsi Meet room.
 
+<img width="1200" height="787" alt="Jitsi Meet Simple" src="https://github.com/user-attachments/assets/c3603153-e15d-4c83-89f2-34a65efeafda" />
+
 ## Download
 
 Download the latest release:
