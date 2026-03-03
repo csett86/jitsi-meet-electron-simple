@@ -24,6 +24,7 @@ Download the latest release:
 - Support screen sharing, if possible with native screensharing pickers (macOS 15+, Linux Wayland)
 - otherwise only the first screen is shared full-screen
 - Light mode and dark mode
+- Open via jitsi-meet:// url handler
 
 ## Development and Testing
 ```bash
