@@ -78,6 +78,10 @@ function loadJitsiMeet() {
         }
     });
 
+    if (parsedUrl.searchParams.get("jwt")) {
+        jwt = parsedUrl.searchParams.get("jwt");
+    }
+
     const options = {
         configOverwrite,
         jwt,

@@ -77,13 +77,6 @@ function createWindow() {
     return { action: 'allow' };
   });
 
-  mainWindow.webContents.on('will-navigate', (event, url) => {
-    if (url.startsWith('https://')) {
-      event.preventDefault();
-      shell.openExternal(url);
-    }
-  });
-
   mainWindow.loadFile('index.html');
 
   mainWindow.webContents.once('did-finish-load', () => {
