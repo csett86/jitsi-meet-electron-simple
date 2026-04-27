@@ -1,4 +1,4 @@
-import { app, BrowserWindow, desktopCapturer, session, Menu } from 'electron';
+import { app, BrowserWindow, desktopCapturer, session, Menu, shell } from 'electron';
 import pkg from 'electron-updater';
 const { autoUpdater } = pkg;
 
@@ -66,6 +66,15 @@ function createWindow() {
       nodeIntegration: false,
       contextIsolation: true
     }
+  });
+
+  mainWindow.webContents.setWindowOpenHandler(({ url }) => {
+    if (url.startsWith('https://')) {
+      shell.openExternal(url);
+      return { action: 'deny' };
+    }
+
+    return { action: 'allow' };
   });
 
   mainWindow.loadFile('index.html');

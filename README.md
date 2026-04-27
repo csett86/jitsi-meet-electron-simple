@@ -20,7 +20,7 @@ Download the latest release:
 4. The Jitsi conference will load in the window
 
 ## Features
-- Join Jitsi Meet (not yet as moderator on meet.jit.si, as jwt callback is not yet implemented)
+- Join Jitsi Meet (including moderator on meet.jit.si)
 - Support screen sharing, if possible with native screensharing pickers (macOS 15+, Linux Wayland)
 - otherwise only the first screen is shared full-screen
 - Light mode and dark mode
