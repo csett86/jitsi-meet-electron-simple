@@ -82,10 +82,10 @@
           "target": "AppImage"
         }
       ],
-      "toolsets": {
-        "appimage": "1.0.3"
-      },
       "category": "Network"
+    },
+    "toolsets": {
+      "appimage": "1.0.3"
     },
     "protocols": [
       {
