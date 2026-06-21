@@ -18,12 +18,12 @@
     "url": "git+https://github.com/csett86/jitsi-meet-electron-simple.git"
   },
   "dependencies": {
-    "electron-updater": "^6.8.3"
+    "electron-updater": "^6.8.9"
   },
   "devDependencies": {
     "@playwright/test": "^1.60.0",
     "electron": "^42.3.2",
-    "electron-builder": "^26.8.1"
+    "electron-builder": "^26.15.3"
   },
   "build": {
     "appId": "com.github.csett86.jitsi-meet-simple",
@@ -83,6 +83,9 @@
         }
       ],
       "category": "Network"
+    },
+    "toolsets": {
+      "appimage": "1.0.3"
     },
     "protocols": [
       {
